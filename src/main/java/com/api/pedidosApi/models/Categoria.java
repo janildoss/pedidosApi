@@ -54,4 +54,5 @@ public class Categoria implements Serializable {
         result = 31 * result + Objects.hashCode(getNome());
         return result;
     }
+
 }
