@@ -16,12 +16,9 @@ public class CategoriaService {
 
     public List<Categoria> FindAll() {
        return categoriaRepository.findAll();
-      // return ResponseEntity.ok().body(categoriaRepository.findAll())
     }
 
      public Categoria FindOne(Integer id) {
-        //return categoriaRepository.findById(id)
-        //        .orElseThrow(() -> new ErrosNotFoundException("Categoria not found with ID: " + id));
        Optional<Categoria> obj = categoriaRepository.findById(id);
        return obj.orElseThrow(() -> new ErrosNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
     }
@@ -39,14 +36,6 @@ public class CategoriaService {
         return true;
     }
 
-    /*public Categoria update(Categoria obj) {
-        Categoria newObj = FindOne(obj.getId());
-       // updateData(newObj,obj);
-      //  if (!categoriaRepository.existsById(obj.getId())) {
-      //      throw new ErrosNotFoundException("Categoria not found with ID: " + obj.getId());
-       //}
-        return categoriaRepository.save(newObj);
-    }*/
     public Categoria update(Integer id, Categoria categoriaAtualizada) {
         Optional<Categoria> categoriaExistente = categoriaRepository.findById(id);
 

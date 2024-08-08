@@ -1,5 +1,4 @@
 package com.api.pedidosApi.models;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
