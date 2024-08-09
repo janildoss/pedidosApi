@@ -1,14 +1,14 @@
 package com.api.pedidosApi.controllers;
 
-import com.api.pedidosApi.ErrorNotFounException.ErrosNotFoundException;
+
 import com.api.pedidosApi.models.Categoria;
 import com.api.pedidosApi.services.CategoriaService;
+import com.api.pedidosApi.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -55,7 +55,7 @@ public class CategoriaController {
         try {
             Categoria categoriaAtualizada = categoriaService.update(id, categoria);
             return ResponseEntity.ok(categoriaAtualizada);
-        } catch (ErrosNotFoundException e) {
+        } catch (ObjectNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
     }

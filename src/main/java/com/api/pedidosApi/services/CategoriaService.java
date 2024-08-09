@@ -1,11 +1,10 @@
 package com.api.pedidosApi.services;
 
-import com.api.pedidosApi.ErrorNotFounException.ErrosNotFoundException;
 import com.api.pedidosApi.models.Categoria;
 import com.api.pedidosApi.repositories.CategoriaRepository;
+import com.api.pedidosApi.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +19,7 @@ public class CategoriaService {
 
      public Categoria FindOne(Integer id) {
        Optional<Categoria> obj = categoriaRepository.findById(id);
-       return obj.orElseThrow(() -> new ErrosNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
+       return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
     }
 
     public Categoria Insert(Categoria obj){
@@ -30,7 +29,7 @@ public class CategoriaService {
 
     public boolean DeleteCategoriaIdById(Integer id) {
         if (!categoriaRepository.existsById(id)) {
-            throw new ErrosNotFoundException("Categoria not found with ID: " + id);
+            throw new ObjectNotFoundException("Categoria not found with ID: " + id);
         }
         categoriaRepository.deleteById(id);
         return true;
@@ -44,7 +43,7 @@ public class CategoriaService {
             categoria.setNome(categoriaAtualizada.getNome());
             return categoriaRepository.save(categoria);
         } else {
-            throw new ErrosNotFoundException("Categoria com id " + id + " não encontrada");
+            throw new ObjectNotFoundException("Categoria com id " + id + " não encontrada");
         }
     }
 

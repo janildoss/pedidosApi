@@ -9,6 +9,7 @@ public class PedidosApiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PedidosApiApplication.class, args);
 		System.out.println("jajao da bahia");
+
 	}
 
 }
