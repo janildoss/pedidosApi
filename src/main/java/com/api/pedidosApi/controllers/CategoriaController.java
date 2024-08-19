@@ -27,13 +27,11 @@ public class CategoriaController {
         return new ResponseEntity<>(categoria, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(value="/{id}")
+    //@RequestMapping(value="/{id}",method=RequestMethod.GET)
     public ResponseEntity<Categoria> findCategoriaId(@PathVariable Integer id) {
-        Categoria categoria = (Categoria) categoriaService.FindOne(id);
-       if (categoria == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-       }
-        return new ResponseEntity<>(categoria, HttpStatus.OK);
+        Categoria obj =  categoriaService.FindOne(id);
+        return ResponseEntity.ok().body(obj );
     }
 
     @PostMapping
