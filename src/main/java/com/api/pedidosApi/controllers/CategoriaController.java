@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -19,7 +18,7 @@ public class CategoriaController {
 
    @GetMapping
     public ResponseEntity<List<Categoria>> findAll() {
-        List<Categoria> categoria = categoriaService.FindAll();
+        List<Categoria> categoria = categoriaService.findAll();
 
         if (categoria.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -28,26 +27,26 @@ public class CategoriaController {
     }
 
     @GetMapping(value="/{id}")
-    //@RequestMapping(value="/{id}",method=RequestMethod.GET)
     public ResponseEntity<Categoria> findCategoriaId(@PathVariable Integer id) {
-        Categoria obj =  categoriaService.FindOne(id);
+        Categoria obj =  categoriaService.findOne(id);
         return ResponseEntity.ok().body(obj );
     }
 
     @PostMapping
-    public ResponseEntity<Categoria> InsertCategoria(@RequestBody Categoria categoria ) {
-        Categoria cat = categoriaService.Insert(categoria);
+    public ResponseEntity<Categoria> insertCategoria(@RequestBody Categoria categoria ) {
+        Categoria cat = categoriaService.insert(categoria);
         return new ResponseEntity<>(cat, HttpStatus.CREATED);
     }
 
   @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCategoriaId(@PathVariable Integer id) {
-        boolean cat = categoriaService.DeleteCategoriaIdById(id);
+        boolean cat = categoriaService.deleteCategoriaIdById(id);
         if (!cat) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
     @PutMapping("/{id}")
     public ResponseEntity<Categoria> atualizarCategoria(@PathVariable Integer id, @RequestBody Categoria categoria) {
         try {
@@ -57,6 +56,5 @@ public class CategoriaController {
             return ResponseEntity.notFound().build();
         }
     }
-
 
 }

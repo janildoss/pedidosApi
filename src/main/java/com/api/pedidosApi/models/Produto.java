@@ -1,20 +1,30 @@
 package com.api.pedidosApi.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
 public class Produto implements Serializable {
       private static final long serialVersionUID = 1L;
       @Id
       @GeneratedValue(strategy= GenerationType.IDENTITY)
-      Integer id;
-      String nome;
-      Double preco;
+      private Integer id;
+      private String nome;
+      private Double preco;
+
+      @ManyToMany
+      @JoinTable(name = "PRODUTO_CATEGORIA",
+              joinColumns = @JoinColumn(name = "produto_id"),
+              inverseJoinColumns = @JoinColumn(name = "categoria_id")
+      )
+     @JsonIgnore
+     //@JsonBackReference
+      private List<Categoria> categorias = new ArrayList();
 
       public Produto (){
 
@@ -50,20 +60,25 @@ public class Produto implements Serializable {
         this.preco = preco;
     }
 
+    public List<Categoria> getCategorias() {
+        return categorias;
+    }
+
+    public void setCategorias(List<Categoria> categorias) {
+        this.categorias = categorias;
+    }
+
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Produto)) return false;
 
         Produto produto = (Produto) o;
-        return getId().equals(produto.getId()) && Objects.equals(getNome(), produto.getNome()) && Objects.equals(getPreco(), produto.getPreco());
+        return getId().equals(produto.getId());
     }
 
     @Override
     public int hashCode() {
-        int result = getId().hashCode();
-        result = 31 * result + Objects.hashCode(getNome());
-        result = 31 * result + Objects.hashCode(getPreco());
-        return result;
+        return getId().hashCode();
     }
 }

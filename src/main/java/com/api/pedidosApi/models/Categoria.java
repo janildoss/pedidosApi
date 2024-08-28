@@ -1,11 +1,13 @@
 package com.api.pedidosApi.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Categoria implements Serializable {
@@ -14,6 +16,12 @@ public class Categoria implements Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private  Integer id;
     private String nome;
+    @ManyToMany(mappedBy="categorias")
+
+    @JsonIgnore
+    //@JsonManagedReference
+    //@JsonBackReference
+    private List<Produto> produtos = new ArrayList();
 
     public Categoria() {
     }
@@ -39,20 +47,25 @@ public class Categoria implements Serializable {
         this.nome = nome;
     }
 
+   public List<Produto> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(List<Produto> produtos) {
+        this.produtos = produtos;
+    }
+
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Categoria)) return false;
 
         Categoria categoria = (Categoria) o;
-        return Objects.equals(getId(), categoria.getId()) && Objects.equals(getNome(), categoria.getNome());
+        return getId().equals(categoria.getId());
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hashCode(getId());
-        result = 31 * result + Objects.hashCode(getNome());
-        return result;
+        return getId().hashCode();
     }
-
 }

@@ -13,22 +13,22 @@ public class CategoriaService {
     @Autowired
     private CategoriaRepository categoriaRepository;
 
-    public List<Categoria> FindAll() {
+    public List<Categoria> findAll() {
        return categoriaRepository.findAll();
     }
 
-     public Categoria FindOne(Integer id) {
+     public Categoria findOne(Integer id) {
        Optional<Categoria> obj = categoriaRepository.findById(id);
       return obj.orElseThrow(() -> new ObjectNotFoundException(
               "Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
     }
 
-    public Categoria Insert(Categoria obj){
+    public Categoria insert(Categoria obj){
         obj.setId(null);
         return categoriaRepository.save(obj);
     }
 
-    public boolean DeleteCategoriaIdById(Integer id) {
+    public boolean deleteCategoriaIdById(Integer id) {
         if (!categoriaRepository.existsById(id)) {
             throw new ObjectNotFoundException("Categoria not found with ID: " + id);
         }
@@ -44,7 +44,7 @@ public class CategoriaService {
             categoria.setNome(categoriaAtualizada.getNome());
             return categoriaRepository.save(categoria);
         } else {
-            throw new ObjectNotFoundException("Categoria com id " + id + " não encontrada");
+           throw new ObjectNotFoundException("Categoria com id " + id + " não encontrada");
         }
     }
 
