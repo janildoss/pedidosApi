@@ -11,5 +11,8 @@ public class PedidosApiApplication {
 		System.out.println("jajao da bahia");
 
 	}
+<<<<<<< HEAD
 
+=======
+>>>>>>> 50c9b9c3bd334f214fb72000be2617dc5492267e
 }
