@@ -1,23 +1,15 @@
 package com.api.pedidosApi.models;
-<<<<<<< HEAD
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-=======
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
->>>>>>> 86b7e346c90ad3f2f37eaad86035b98477a82ae2
 import java.io.Serializable;
-<<<<<<< HEAD
-import java.util.Objects;
-=======
 import java.util.ArrayList;
 import java.util.List;
 
->>>>>>> ea656e771e7208f1728e382f8c41beb77eb61961
 @Entity
 public class Categoria implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -28,8 +20,6 @@ public class Categoria implements Serializable {
     @ManyToMany(mappedBy="categorias")
 
     @JsonIgnore
-    //@JsonManagedReference
-    //@JsonBackReference
     private List<Produto> produtos = new ArrayList();
 
     public Categoria() {
