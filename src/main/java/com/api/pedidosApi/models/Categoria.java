@@ -17,9 +17,7 @@ public class Categoria implements Serializable {
     @ManyToMany(mappedBy="categorias")
 
     @JsonIgnore
-    //@JsonManagedReference
-    //@JsonBackReference
-    private List<Produto> produtos = new ArrayList();
+     private List<Produto> produtos = new ArrayList();
 
     public Categoria() {
     }
