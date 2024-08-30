@@ -1,8 +1,15 @@
 package com.api.pedidosApi.models;
+<<<<<<< HEAD
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+=======
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+>>>>>>> 86b7e346c90ad3f2f37eaad86035b98477a82ae2
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

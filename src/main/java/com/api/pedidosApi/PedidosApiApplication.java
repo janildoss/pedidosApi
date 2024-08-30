@@ -8,6 +8,10 @@ public class PedidosApiApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PedidosApiApplication.class, args);
+<<<<<<< HEAD
+		System.out.println("teste");
+	}
+=======
 		System.out.println("jajao da bahia");
 
 	}
@@ -15,4 +19,5 @@ public class PedidosApiApplication {
 
 =======
 >>>>>>> 50c9b9c3bd334f214fb72000be2617dc5492267e
+>>>>>>> 86b7e346c90ad3f2f37eaad86035b98477a82ae2
 }
