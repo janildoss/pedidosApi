@@ -9,6 +9,9 @@ public class PedidosApiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PedidosApiApplication.class, args);
 <<<<<<< HEAD
+	}
+=======
+<<<<<<< HEAD
 		System.out.println("teste");
 	}
 =======
@@ -16,6 +19,7 @@ public class PedidosApiApplication {
 
 	}
 <<<<<<< HEAD
+>>>>>>> ea656e771e7208f1728e382f8c41beb77eb61961
 
 =======
 >>>>>>> 50c9b9c3bd334f214fb72000be2617dc5492267e
