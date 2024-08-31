@@ -56,5 +56,4 @@ public class CategoriaController {
             return ResponseEntity.notFound().build();
         }
     }
-
 }

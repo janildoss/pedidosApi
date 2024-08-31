@@ -21,18 +21,5 @@ public class ResourceExceptionHandler {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
         }
 
-
-        /*private String convertTimestampToDateTime(long timestamp) {
-        // Converter para um Instant
-        Instant instant = Instant.ofEpochMilli(timestamp);
-
-        // Converter o Instant para LocalDateTime na zona de tempo do sistema
-        LocalDateTime dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
-
-        // Formatar a data e hora
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-        return dateTime.format(formatter);
-    }*/
-
 }
 
