@@ -1,5 +1,7 @@
 package com.api.pedidosApi.controllers.exception;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serial;
 import java.io.Serializable;
 
@@ -8,6 +10,8 @@ public class StandardError implements Serializable {
     private static final long serialVersionUID = 1L;
     private Integer status;
     private String msg;
+
+    @JsonFormat(pattern="dd/MM/yyyy hh:mm")
     private Long timestamp;
 
     public StandardError(Integer status, String msg, Long timestamp) {

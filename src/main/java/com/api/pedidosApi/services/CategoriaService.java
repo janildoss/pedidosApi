@@ -29,14 +29,6 @@ public class CategoriaService {
         return categoriaRepository.save(obj);
     }
 
-    public boolean deleteCategoriaIdById(Integer id) {
-        if (!categoriaRepository.existsById(id)) {
-            throw new ObjectNotFoundException("Categoria not found with ID: " + id);
-        }
-        categoriaRepository.deleteById(id);
-        return true;
-    }
-
     public Categoria update(Integer id, Categoria categoriaAtualizada) {
         Optional<Categoria> categoriaExistente = categoriaRepository.findById(id);
 
@@ -45,8 +37,16 @@ public class CategoriaService {
             categoria.setNome(categoriaAtualizada.getNome());
             return categoriaRepository.save(categoria);
         } else {
-           throw new ObjectNotFoundException("Categoria com id " + id + " não encontrada");
+            throw new ObjectNotFoundException("Categoria com id " + id + " não encontrada");
         }
+    }
+
+    public boolean deleteCategoriaIdById(Integer id) {
+        if (!categoriaRepository.existsById(id)) {
+            throw new ObjectNotFoundException("Categoria não encontrada impossivel excluir registro com o  ID: " + id);
+        }
+        categoriaRepository.deleteById(id);
+        return true;
     }
 
 }

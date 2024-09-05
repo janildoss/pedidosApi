@@ -1,12 +1,11 @@
 package com.api.pedidosApi.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 
 @Entity
 public class Produto implements Serializable {
@@ -17,14 +16,14 @@ public class Produto implements Serializable {
       private String nome;
       private Double preco;
 
-      @ManyToMany
+      @JsonBackReference
+      @ManyToMany(fetch = FetchType.EAGER)
       @JoinTable(name = "PRODUTO_CATEGORIA",
               joinColumns = @JoinColumn(name = "produto_id"),
               inverseJoinColumns = @JoinColumn(name = "categoria_id")
       )
-     @JsonIgnore
-     //@JsonBackReference
-      private List<Categoria> categorias = new ArrayList();
+
+      private List<Categoria> categorias = new ArrayList<>();
 
       public Produto (){
 

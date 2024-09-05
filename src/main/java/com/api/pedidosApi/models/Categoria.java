@@ -6,25 +6,28 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Categoria implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @JsonIgnore
     private  Integer id;
     private String nome;
-    @ManyToMany(mappedBy="categorias")
 
-    @JsonIgnore
-    //@JsonManagedReference
-    //@JsonBackReference
-    private List<Produto> produtos = new ArrayList();
+    @JsonManagedReference
+    @ManyToMany(mappedBy="categorias", fetch = FetchType.EAGER)
+    private List<Produto> produtos = new ArrayList<>();
 
     public Categoria() {
     }
@@ -33,7 +36,6 @@ public class Categoria implements Serializable {
         this.id = id;
         this.nome = nome;
     }
-
 
     public Integer getId() {
         return id;
