@@ -2,7 +2,6 @@ package com.api.pedidosApi.controllers;
 
 
 import com.api.pedidosApi.models.Categoria;
-import com.api.pedidosApi.services.CategoriaService;
 import com.api.pedidosApi.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
