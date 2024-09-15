@@ -1,36 +1,37 @@
 package com.api.pedidosApi.models;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Entity
 public class Produto implements Serializable {
-      private static final long serialVersionUID = 1L;
-      @Id
-      @GeneratedValue(strategy= GenerationType.IDENTITY)
-      private Integer id;
-      private String nome;
-      private Double preco;
+    private static final long serialVersionUID = 1L;
 
-      @ManyToMany
-      @JoinTable(name = "PRODUTO_CATEGORIA",
-              joinColumns = @JoinColumn(name = "produto_id"),
-              inverseJoinColumns = @JoinColumn(name = "categoria_id")
-      )
-     @JsonIgnore
-     //@JsonBackReference
-      private List<Categoria> categorias = new ArrayList();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-      public Produto (){
+    private String nome;
 
-      }
+    @NotNull
+    @Min(value = 0, message = "O preço deve ser maior que zero")
+    private Double preco;
 
-    public Produto(Integer id, String nome, Double preco) {
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "PRODUTO_CATEGORIA",
+            joinColumns = @JoinColumn(name = "produto_id"),
+            inverseJoinColumns = @JoinColumn(name = "categoria_id")
+    )
+    private List<Categoria> categorias = new ArrayList<>();
+
+    public Produto() {}
+
+    public Produto(Integer id, @NotNull String nome, @NotNull Double preco) {
         this.id = id;
         this.nome = nome;
         this.preco = preco;
@@ -71,14 +72,13 @@ public class Produto implements Serializable {
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Produto)) return false;
-
+        if (o == null || getClass() != o.getClass()) return false;
         Produto produto = (Produto) o;
-        return getId().equals(produto.getId());
+        return id != null && id.equals(produto.id);
     }
 
     @Override
     public int hashCode() {
-        return getId().hashCode();
+        return (id != null) ? id.hashCode() : 0;
     }
 }
