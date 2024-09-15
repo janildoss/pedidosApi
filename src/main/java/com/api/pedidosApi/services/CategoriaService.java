@@ -1,3 +1,4 @@
+
 package com.api.pedidosApi.services;
 
 import com.api.pedidosApi.models.Categoria;
@@ -5,6 +6,8 @@ import com.api.pedidosApi.repositories.CategoriaRepository;
 import com.api.pedidosApi.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,30 +17,29 @@ public class CategoriaService {
     private CategoriaRepository categoriaRepository;
 
     public List<Categoria> findAll() {
-       return categoriaRepository.findAll();
+        return categoriaRepository.findAll();
     }
 
-
-     public Categoria findOne(Integer id) {
-       Optional<Categoria> obj = categoriaRepository.findById(id);
-      return obj.orElseThrow(() -> new ObjectNotFoundException(
-              "Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
+    public Categoria findById(Integer id) {
+        Optional<Categoria> categoria = categoriaRepository.findById(id);
+        return categoria.orElseThrow(() -> new ObjectNotFoundException(
+                "Categoria não encontrada! Id: " + id + ", Tipo: " + Categoria.class.getName()));
     }
 
-    public Categoria insert(Categoria obj){
-        obj.setId(null);
-        return categoriaRepository.save(obj);
+    public Categoria inserirCategoria(Categoria categoria){
+        categoria.setId(null);
+        return categoriaRepository.save(categoria);
     }
 
-    public boolean deleteCategoriaIdById(Integer id) {
+    @Transactional
+    public void deleteCategoriaById(Integer id) {
         if (!categoriaRepository.existsById(id)) {
-            throw new ObjectNotFoundException("Categoria not found with ID: " + id);
+            throw new ObjectNotFoundException("Categoria não encontrada. Id: " + id);
         }
         categoriaRepository.deleteById(id);
-        return true;
     }
 
-    public Categoria update(Integer id, Categoria categoriaAtualizada) {
+    public Categoria updateCategoria(Integer id, Categoria categoriaAtualizada) {
         Optional<Categoria> categoriaExistente = categoriaRepository.findById(id);
 
         if (categoriaExistente.isPresent()) {
@@ -45,7 +47,7 @@ public class CategoriaService {
             categoria.setNome(categoriaAtualizada.getNome());
             return categoriaRepository.save(categoria);
         } else {
-           throw new ObjectNotFoundException("Categoria com id " + id + " não encontrada");
+            throw new ObjectNotFoundException("Categoria com id " + id + " não encontrada portanto não pode ser atualizada!");
         }
     }
 
