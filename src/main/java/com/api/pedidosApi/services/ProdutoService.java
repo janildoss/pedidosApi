@@ -48,5 +48,4 @@ public class ProdutoService {
             throw new ObjectNotFoundException("Produto com id " + id + " não encontrada");
         }
     }
-
 }
