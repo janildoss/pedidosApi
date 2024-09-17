@@ -36,10 +36,10 @@ public class Categoria implements Serializable {
     }
 
     @Override
-    public final boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Categoria categoria = (Categoria) o;
+    public final boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Categoria categoria = (Categoria) obj;
         return id != null && id.equals(categoria.id);
     }
 
