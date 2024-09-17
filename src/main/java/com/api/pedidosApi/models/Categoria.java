@@ -1,13 +1,6 @@
 package com.api.pedidosApi.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,16 +8,12 @@ import java.util.List;
 @Entity
 public class Categoria implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private  Integer id;
-    private String nome;
-    @ManyToMany(mappedBy="categorias")
 
-    @JsonIgnore
-    //@JsonManagedReference
-    //@JsonBackReference
-    private List<Produto> produtos = new ArrayList();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    private String nome;
 
     public Categoria() {
     }
@@ -33,7 +22,6 @@ public class Categoria implements Serializable {
         this.id = id;
         this.nome = nome;
     }
-
 
     public Integer getId() {
         return id;
@@ -47,29 +35,16 @@ public class Categoria implements Serializable {
         return nome;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-   public List<Produto> getProdutos() {
-        return produtos;
-    }
-
-    public void setProdutos(List<Produto> produtos) {
-        this.produtos = produtos;
-    }
-
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Categoria)) return false;
-
+        if (o == null || getClass() != o.getClass()) return false;
         Categoria categoria = (Categoria) o;
-        return getId().equals(categoria.getId());
+        return id != null && id.equals(categoria.id);
     }
 
     @Override
     public int hashCode() {
-        return getId().hashCode();
+        return (id != null) ? id.hashCode() : 0;
     }
 }
