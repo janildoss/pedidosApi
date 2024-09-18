@@ -15,12 +15,16 @@ public class Categoria implements Serializable {
 
     private String nome;
 
+    @ManyToMany(mappedBy = "produtos")
+    private List<Categoria> categorias = new ArrayList<>();
+
     public Categoria() {
     }
 
-    public Categoria(Integer id, String nome) {
+    public Categoria(Integer id, String nome, List<Categoria> categorias) {
         this.id = id;
         this.nome = nome;
+        this.categorias = categorias;
     }
 
     public Integer getId() {
@@ -33,6 +37,18 @@ public class Categoria implements Serializable {
 
     public String getNome() {
         return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public List<Categoria> getCategorias() {
+        return categorias;
+    }
+
+    public void setCategorias(List<Categoria> categorias) {
+        this.categorias = categorias;
     }
 
     @Override
