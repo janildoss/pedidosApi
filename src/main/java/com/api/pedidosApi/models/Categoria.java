@@ -3,7 +3,7 @@ package com.api.pedidosApi.models;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Categoria implements Serializable {
@@ -21,9 +21,10 @@ public class Categoria implements Serializable {
     public Categoria() {
     }
 
-    public Categoria(Integer id, String nome) {
+    public Categoria(Integer id, String nome, List<Produto> produtos) {
         this.id = id;
         this.nome = nome;
+        this.produtos = produtos;
     }
 
     public Integer getId() {
@@ -53,9 +54,10 @@ public class Categoria implements Serializable {
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Categoria)) return false;
+
         Categoria categoria = (Categoria) o;
-        return id != null && id.equals(categoria.id);
+        return Objects.equals(getId(), categoria.getId()) && Objects.equals(getNome(), categoria.getNome()) && Objects.equals(getProdutos(), categoria.getProdutos());
     }
 
     @Override
