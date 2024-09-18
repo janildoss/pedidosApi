@@ -3,7 +3,7 @@ package com.api.pedidosApi.models;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Categoria implements Serializable {
@@ -15,16 +15,16 @@ public class Categoria implements Serializable {
 
     private String nome;
 
-    @ManyToMany(mappedBy = "produtos")
-    private List<Categoria> categorias = new ArrayList<>();
+    @ManyToMany(mappedBy = "categorias", fetch = FetchType.EAGER)
+    private List<Produto> produtos = new ArrayList<>();
 
     public Categoria() {
     }
 
-    public Categoria(Integer id, String nome, List<Categoria> categorias) {
+    public Categoria(Integer id, String nome, List<Produto> produtos) {
         this.id = id;
         this.nome = nome;
-        this.categorias = categorias;
+        this.produtos = produtos;
     }
 
     public Integer getId() {
@@ -43,20 +43,21 @@ public class Categoria implements Serializable {
         this.nome = nome;
     }
 
-    public List<Categoria> getCategorias() {
-        return categorias;
+    public List<Produto> getProdutos() {
+        return produtos;
     }
 
-    public void setCategorias(List<Categoria> categorias) {
-        this.categorias = categorias;
+    public void setProdutos(List<Produto> produtos) {
+        this.produtos = produtos;
     }
 
     @Override
-    public final boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Categoria categoria = (Categoria) obj;
-        return id != null && id.equals(categoria.id);
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Categoria)) return false;
+
+        Categoria categoria = (Categoria) o;
+        return Objects.equals(getId(), categoria.getId()) && Objects.equals(getNome(), categoria.getNome()) && Objects.equals(getProdutos(), categoria.getProdutos());
     }
 
     @Override
