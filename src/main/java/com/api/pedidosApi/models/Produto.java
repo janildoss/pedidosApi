@@ -25,7 +25,6 @@ import java.util.List;
         @Min(value = 0, message = "O preço deve ser maior que zero")
         private Double preco;
 
-        //@JsonIgnore
         @JsonBackReference
         @ManyToMany(fetch = FetchType.EAGER)
         @JoinTable(name = "PRODUTO_CATEGORIA",
