@@ -1,7 +1,8 @@
 package com.api.pedidosApi.services;
 
+import com.api.pedidosApi.Repositories.ProdutoRepository;
 import com.api.pedidosApi.models.Produto;
-import com.api.pedidosApi.repositories.ProdutoRepository;
+//import com.api.pedidosApi.repositories.ProdutoRepository;
 import com.api.pedidosApi.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,7 @@ public class ProdutoService {
                 "Produto não encontrado! Id: " + id + ", Tipo: " + Produto.class.getName()));
     }
 
-    public Produto insert(Produto produto){
+    public Produto inserirProduto(Produto produto){
         produto.setId(null);
         return produtoRepository.save(produto);
     }
