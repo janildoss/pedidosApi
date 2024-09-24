@@ -1,5 +1,6 @@
 package com.api.pedidosApi.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -24,7 +25,7 @@ import java.util.List;
         @Min(value = 0, message = "O preço deve ser maior que zero")
         private Double preco;
 
-        @JsonIgnore
+        @JsonBackReference
         @ManyToMany(fetch = FetchType.EAGER)
         @JoinTable(name = "PRODUTO_CATEGORIA",
                 joinColumns = @JoinColumn(name = "produto_id"),
