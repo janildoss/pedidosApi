@@ -1,9 +1,10 @@
 package com.api.pedidosApi.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Objects;
 
 @Entity
 public class Categoria implements Serializable {
@@ -15,6 +16,7 @@ public class Categoria implements Serializable {
 
     private String nome;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "categorias", fetch = FetchType.EAGER)
     private List<Produto> produtos = new ArrayList<>();
 
@@ -57,11 +59,12 @@ public class Categoria implements Serializable {
         if (!(o instanceof Categoria)) return false;
 
         Categoria categoria = (Categoria) o;
-        return Objects.equals(getId(), categoria.getId()) && Objects.equals(getNome(), categoria.getNome()) && Objects.equals(getProdutos(), categoria.getProdutos());
+        return getId().equals(categoria.getId());
     }
 
     @Override
     public int hashCode() {
-        return (id != null) ? id.hashCode() : 0;
+        return getId().hashCode();
     }
+
 }
