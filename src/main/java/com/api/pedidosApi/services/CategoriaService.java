@@ -1,5 +1,7 @@
 package com.api.pedidosApi.services;
 
+
+import com.api.pedidosApi.Repositories.CategoriaRepository;
 import com.api.pedidosApi.models.Categoria;
 import com.api.pedidosApi.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

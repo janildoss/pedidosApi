@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Produto {
+
     @Entity
     public class Produto implements Serializable {
         private static final long serialVersionUID = 1L;
@@ -56,11 +56,11 @@ public class Produto {
             this.nome = nome;
         }
 
-        public Double getPreco() {
+        public @NotNull @Min(value = 0, message = "O preço deve ser maior que zero") Double getPreco() {
             return preco;
         }
 
-        public void setPreco(Double preco) {
+        public void setPreco(@NotNull @Min(value = 0, message = "O preço deve ser maior que zero") Double preco) {
             this.preco = preco;
         }
 
@@ -71,6 +71,7 @@ public class Produto {
         public void setCategorias(List<Categoria> categorias) {
             this.categorias = categorias;
         }
+
 
         @Override
         public final boolean equals(Object o) {
