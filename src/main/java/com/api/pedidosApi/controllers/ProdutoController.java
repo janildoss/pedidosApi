@@ -1,6 +1,5 @@
 package com.api.pedidosApi.controllers;
 
-import com.api.pedidosApi.models.Categoria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,15 +19,15 @@ public class ProdutoController {
     }
 
     @GetMapping(value="/{id}")
-    public ResponseEntity<Produto> findCategoriaId(@PathVariable Integer id) {
+    public ResponseEntity<Produto> findProdutoId(@PathVariable Integer id) {
         Produto produto =  produtoService.findById(id);
         return ResponseEntity.ok().body(produto );
     }
 
     @PostMapping
     public ResponseEntity<Produto> insert(@RequestBody Produto produto ) {
-        Categoria cat = produtoService.inserirProduto(produto);
-        return new ResponseEntity<>(cat, HttpStatus.CREATED);
+        Produto  prod = produtoService.inserirProduto(produto);
+        return new ResponseEntity<>(prod, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
