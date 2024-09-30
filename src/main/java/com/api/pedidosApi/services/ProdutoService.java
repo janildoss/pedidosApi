@@ -2,11 +2,12 @@ package com.api.pedidosApi.services;
 
 import com.api.pedidosApi.Repositories.ProdutoRepository;
 import com.api.pedidosApi.models.Produto;
-//import com.api.pedidosApi.repositories.ProdutoRepository;
 import com.api.pedidosApi.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,7 +31,7 @@ public class ProdutoService {
         return produtoRepository.save(produto);
     }
 
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
     public void deleteProdutoById(Integer id) {
         if (!produtoRepository.existsById(id)) {
             throw new ObjectNotFoundException("Produto não encontrada. Id: " + id);

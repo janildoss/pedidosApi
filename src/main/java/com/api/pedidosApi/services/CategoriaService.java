@@ -6,7 +6,9 @@ import com.api.pedidosApi.models.Categoria;
 import com.api.pedidosApi.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,7 +32,7 @@ public class CategoriaService {
         return categoriaRepository.save(categoria);
     }
 
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
     public void deleteCategoriaById(Integer id) {
         if (!categoriaRepository.existsById(id)) {
             throw new ObjectNotFoundException("Categoria não encontrada. Id: " + id);
