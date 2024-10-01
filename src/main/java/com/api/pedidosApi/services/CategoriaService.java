@@ -32,7 +32,8 @@ public class CategoriaService {
         return categoriaRepository.save(categoria);
     }
 
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
+
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
     public void deleteCategoriaById(Integer id) {
         if (!categoriaRepository.existsById(id)) {
             throw new ObjectNotFoundException("Categoria não encontrada. Id: " + id);

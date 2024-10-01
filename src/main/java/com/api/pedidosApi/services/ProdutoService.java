@@ -31,7 +31,7 @@ public class ProdutoService {
         return produtoRepository.save(produto);
     }
 
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
     public void deleteProdutoById(Integer id) {
         if (!produtoRepository.existsById(id)) {
             throw new ObjectNotFoundException("Produto não encontrada. Id: " + id);
