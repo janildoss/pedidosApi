@@ -1,10 +1,11 @@
 package com.api.pedidosApi.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Cidade implements Serializable {
@@ -15,6 +16,10 @@ public class Cidade implements Serializable {
     private Integer id;
 
     private String nome;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "estado_id")  // Chave estrangeira para Estado
+    private Estado estado;
 
     public Cidade(){
 
