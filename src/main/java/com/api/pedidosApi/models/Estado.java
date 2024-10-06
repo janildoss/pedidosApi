@@ -42,9 +42,9 @@ public class Estado implements Serializable {
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Estado)) return false;
+        if (!(o instanceof Categoria)) return false;
 
-        Estado estado = (Estado) o;
+        Categoria estado = (Categoria) o;
         return id.equals(estado.id);
     }
 
