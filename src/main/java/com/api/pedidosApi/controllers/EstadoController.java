@@ -42,5 +42,4 @@ public class EstadoController {
         Estado estadoAtualizado = estadoService.updateEstado(id, estado) ;
         return ResponseEntity.ok(estadoAtualizado);
     }
-
 }
