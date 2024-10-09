@@ -1,6 +1,7 @@
 package com.api.pedidosApi.controllers;
 
 import com.api.pedidosApi.models.Estado;
+import com.api.pedidosApi.services.EstadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +40,7 @@ public class EstadoController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Estado> atualizarEstado(@PathVariable Integer id, @RequestBody Estado estado) {
-        Estado estadoAtualizado = estadoService.updateEstado(id, estado) ;
+        Estado estadoAtualizado = estadoService.update(id, estado) ;
         return ResponseEntity.ok(estadoAtualizado);
     }
 }
