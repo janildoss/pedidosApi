@@ -1,5 +1,6 @@
 package com.api.pedidosApi.services;
 
+import com.api.pedidosApi.Repositories.EstadoRepository;
 import com.api.pedidosApi.models.Estado;
 import com.api.pedidosApi.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class EstadoService {
 
     public Estado findById(Integer id) {
         Optional<Estado> estado = estadoRepository.findById(id);
-        return Estado.orElseThrow(() -> new ObjectNotFoundException(
+        return estado.orElseThrow(() -> new ObjectNotFoundException(
                 "Estado não encontrado! Id: " + id + ", Tipo: " + Estado.class.getName()));
     }
 
@@ -42,9 +43,9 @@ public class EstadoService {
         Optional<Estado> estadoExistente = estadoRepository.findById(id);
 
         if (estadoExistente.isPresent()) {
-            Estado estado = estadoExistente.get();
-            estado.setNome(estado.getNome());
-            return estadoRepository.save(estado);
+            Estado est = estadoExistente.get();
+            est.setNome(estado.getNome());
+            return estadoRepository.save(est);
         } else {
             throw new ObjectNotFoundException("Estado com id " + id + " não encontrada");
         }

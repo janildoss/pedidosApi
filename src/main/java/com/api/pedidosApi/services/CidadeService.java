@@ -1,6 +1,7 @@
 package com.api.pedidosApi.services;
 
 
+import com.api.pedidosApi.Repositories.CidadeRepository;
 import com.api.pedidosApi.models.Cidade;
 import com.api.pedidosApi.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +44,8 @@ public class CidadeService {
         Optional<Cidade> cidadeExistente = cidadeRepository.findById(id);
 
         if (cidadeExistente.isPresent()) {
-            Cidade cidade = cidadeExistente.get();
-            cidade.setNome(cidade.getNome());
+            Cidade cid = cidadeExistente.get();
+            cid.setNome(cidade.getNome());
             return cidadeRepository.save(cidade);
         } else {
             throw new ObjectNotFoundException("Cidade com id " + id + " não encontrada");
