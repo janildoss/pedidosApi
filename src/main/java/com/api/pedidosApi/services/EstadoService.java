@@ -45,10 +45,9 @@ public class EstadoService {
         if (estadoExistente.isPresent()) {
             Estado est = estadoExistente.get();
             est.setNome(estado.getNome());
-            return estadoRepository.save(est);
+
         } else {
             throw new ObjectNotFoundException("Estado com id " + id + " não encontrada");
         }
     }
-
 }
