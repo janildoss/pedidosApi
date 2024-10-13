@@ -50,5 +50,4 @@ public class EstadoService {
             throw new ObjectNotFoundException("Estado com id " + id + " não encontrada");
         }
     }
-
 }
