@@ -1,7 +1,10 @@
 package com.api.pedidosApi.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,7 +16,8 @@ public class Estado implements Serializable {
     private String nome;
 
     @OneToMany(mappedBy = "estado", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<Cidade> cidades;
+   @JsonManagedReference
+    private List<Cidade> cidades = new ArrayList<>();
 
     public Estado(){
 
@@ -38,6 +42,14 @@ public class Estado implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public List<Cidade> getCidades() {
+        return cidades;
+    }
+
+    public void setCidades(List<Cidade> cidades) {
+        this.cidades = cidades;
     }
 
     @Override
