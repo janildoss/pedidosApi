@@ -1,9 +1,8 @@
 package com.api.pedidosApi.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -19,16 +18,27 @@ public class Endereco implements Serializable {
     private String bairro;
     private String cep;
 
-    public Endereco(){
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name="cliente_id")
+    private Cliente cliente;
 
+    @ManyToOne
+    @JoinColumn(name="cidade_id")
+    private Cidade cidade;
+
+    public Endereco(){
     }
 
-    public Endereco(Integer id, String logradouro, String numero, String complemento, String bairro, String cep) {
+    public Endereco(Integer id, String logradouro, String numero, String complemento,
+                    String bairro, Cliente cliente,  Cidade cidade, String cep) {
         this.id = id;
         this.logradouro = logradouro;
         this.numero = numero;
         this.complemento = complemento;
         this.bairro = bairro;
+        this.cliente = cliente;
+        this.cidade = cidade;
         this.cep = cep;
     }
 
@@ -78,6 +88,22 @@ public class Endereco implements Serializable {
 
     public void setCep(String cep) {
         this.cep = cep;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Cidade getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(Cidade cidade) {
+        this.cidade = cidade;
     }
 
     @Override
