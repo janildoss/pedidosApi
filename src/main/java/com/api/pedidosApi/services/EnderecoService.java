@@ -1,5 +1,6 @@
 package com.api.pedidosApi.services;
 
+import com.api.pedidosApi.Repositories.EnderecoRepository;
 import com.api.pedidosApi.models.Endereco;
 import com.api.pedidosApi.models.Estado;
 import com.api.pedidosApi.services.exceptions.ObjectNotFoundException;
@@ -44,8 +45,13 @@ public class EnderecoService {
         Optional<Endereco> enderecoExistente = enderecoRepository.findById(id);
 
         if (enderecoExistente.isPresent()) {
-            Estado end = enderecoExistente.get();
-            end.setNome(Endereco.getNome());
+            Endereco end = enderecoExistente.get();
+            end.setLogradouro(endereco.getLogradouro());
+            end.setNumero(endereco.getNumero());
+            end.setComplemento(endereco.getComplemento());
+            end.setBairro(endereco.getBairro());
+            end.setCep(endereco.getCep());
+
             return enderecoRepository.save(end);
         } else {
             throw new ObjectNotFoundException("Endereco com id " + id + " não encontrada");
