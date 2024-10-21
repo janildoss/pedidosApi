@@ -12,7 +12,6 @@ import java.util.Set;
 @Entity
 public class Cliente implements Serializable {
     private static final long serialVersionUID = 1L;
-
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY )
     private Integer id;
@@ -28,6 +27,8 @@ public class Cliente implements Serializable {
     @ElementCollection
     @CollectionTable(name="TELEFONE")
     private Set<String> telefones = new HashSet<>();
+
+    @OneToMany(mappedBy="cliente")
     private List<Pedido> pedidos = new ArrayList<>();
     public Cliente(){
 
@@ -107,5 +108,19 @@ public class Cliente implements Serializable {
 
     public void setPedidos(List<Pedido> pedidos) {
         this.pedidos = pedidos;
+    }
+
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Cliente)) return false;
+
+        Cliente cliente = (Cliente) o;
+        return getId().equals(cliente.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getId().hashCode();
     }
 }
