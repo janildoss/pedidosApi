@@ -15,10 +15,10 @@ public class ItemPedido  implements Serializable {
     private Double desconto;
     private Integer quantidade;
     private Double preco;
-    private Integer idPedido;
+    private Integer pedidoId;
+    private Integer produtoId;
 
     public ItemPedido(){
-
     }
 
     public ItemPedido(Integer id, Double desconto, Integer quantidade, Double preco, Integer idPedido) {
@@ -26,7 +26,7 @@ public class ItemPedido  implements Serializable {
         this.desconto = desconto;
         this.quantidade = quantidade;
         this.preco = preco;
-        this.idPedido = idPedido;
+        this.pedidoId = idPedido;
     }
 
     public Integer getId() {
@@ -61,12 +61,20 @@ public class ItemPedido  implements Serializable {
         this.preco = preco;
     }
 
-    public Integer getIdPedido() {
-        return idPedido;
+    public Integer getPedidoId() {
+        return pedidoId;
     }
 
-    public void setIdPedido(Integer idPedido) {
-        this.idPedido = idPedido;
+    public void setPedidoId(Integer pedidoId) {
+        this.pedidoId = pedidoId;
+    }
+
+    public Integer getProdutoId() {
+        return produtoId;
+    }
+
+    public void setProdutoId(Integer produtoId) {
+        this.produtoId = produtoId;
     }
 
     @Override
