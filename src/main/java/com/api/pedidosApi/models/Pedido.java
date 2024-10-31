@@ -13,7 +13,7 @@ public class Pedido  implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
-    private Date instante;
+    private Date dataPedido;
     private Integer estadoPagamento;
     private Integer  tipoPagamento;
     private Integer numParcela;
@@ -21,9 +21,9 @@ public class Pedido  implements Serializable {
     public Pedido(){
     }
 
-    public Pedido(Integer id, Date instante, Integer estadoPagamento, Integer tipoPagamento, Integer numParcela) {
+    public Pedido(Integer id, Date dataPedido, Integer estadoPagamento, Integer tipoPagamento, Integer numParcela) {
         this.id = id;
-        this.instante = instante;
+        this.dataPedido = dataPedido;
         this.estadoPagamento = estadoPagamento;
         this.tipoPagamento = tipoPagamento;
         this.numParcela = numParcela;
@@ -37,20 +37,12 @@ public class Pedido  implements Serializable {
         this.id = id;
     }
 
-    public Date getInstante() {
-        return instante;
+    public Integer getNumParcela() {
+        return numParcela;
     }
 
-    public void setInstante(Date instante) {
-        this.instante = instante;
-    }
-
-    public Integer getEstadoPagamento() {
-        return estadoPagamento;
-    }
-
-    public void setEstadoPagamento(Integer estadoPagamento) {
-        this.estadoPagamento = estadoPagamento;
+    public void setNumParcela(Integer numParcela) {
+        this.numParcela = numParcela;
     }
 
     public Integer getTipoPagamento() {
@@ -61,12 +53,20 @@ public class Pedido  implements Serializable {
         this.tipoPagamento = tipoPagamento;
     }
 
-    public Integer getNumParcela() {
-        return numParcela;
+    public Integer getEstadoPagamento() {
+        return estadoPagamento;
     }
 
-    public void setNumParcela(Integer numParcela) {
-        this.numParcela = numParcela;
+    public void setEstadoPagamento(Integer estadoPagamento) {
+        this.estadoPagamento = estadoPagamento;
+    }
+
+    public Date getDataPedido() {
+        return dataPedido;
+    }
+
+    public void setDataPedido(Date dataPedido) {
+        this.dataPedido = dataPedido;
     }
 
     @Override
