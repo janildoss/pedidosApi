@@ -22,14 +22,20 @@ public class Cliente implements Serializable {
     private Integer tipo;
 
     @JsonManagedReference
-    @OneToMany(mappedBy="cliente")
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Pedido> pedidos  = new ArrayList<>();;
+
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Endereco> enderecos = new ArrayList<>();
+
+
+    //private List<Endereco> enderecos;
 
     @ElementCollection
     @CollectionTable(name="TELEFONE")
     private Set<String> telefones = new HashSet<>();
-    private List<Pedido> pedidos = new ArrayList<>();
-    public Cliente(){
+
+   public Cliente(){
 
     }
 
@@ -108,4 +114,5 @@ public class Cliente implements Serializable {
     public void setPedidos(List<Pedido> pedidos) {
         this.pedidos = pedidos;
     }
+
 }
