@@ -1,11 +1,12 @@
 package com.api.pedidosApi.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Pedido  implements Serializable {
@@ -18,8 +19,14 @@ public class Pedido  implements Serializable {
     private Integer  tipoPagamento;
     private Integer numParcela;
 
+    @JsonManagedReference
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
+
     public Pedido(){
     }
+
 
     public Pedido(Integer id, Date dataPedido, Integer estadoPagamento, Integer tipoPagamento, Integer numParcela) {
         this.id = id;
