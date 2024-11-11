@@ -17,17 +17,19 @@ public class Pagamento implements Serializable {
     private Date dataPagto;
     private Integer parcelaPagto;
     private Integer tipoRecebimento;
+    private Integer idPedido;
 
     public Pagamento(){
 
     }
 
-    public Pagamento(Integer id, Integer tipoRecebimento, Integer parcelaPagto, Date dataPagto, Double valor) {
+    public Pagamento(Integer id, Double valor, Date dataPagto, Integer parcelaPagto, Integer tipoRecebimento, Integer idPedido) {
         this.id = id;
-        this.tipoRecebimento = tipoRecebimento;
-        this.parcelaPagto = parcelaPagto;
-        this.dataPagto = dataPagto;
         this.valor = valor;
+        this.dataPagto = dataPagto;
+        this.parcelaPagto = parcelaPagto;
+        this.tipoRecebimento = tipoRecebimento;
+        this.idPedido = idPedido;
     }
 
     public Integer getId() {
@@ -38,20 +40,12 @@ public class Pagamento implements Serializable {
         this.id = id;
     }
 
-    public Integer getTipoRecebimento() {
-        return tipoRecebimento;
+    public Double getValor() {
+        return valor;
     }
 
-    public void setTipoRecebimento(Integer tipoRecebimento) {
-        this.tipoRecebimento = tipoRecebimento;
-    }
-
-    public Integer getParcelaPagto() {
-        return parcelaPagto;
-    }
-
-    public void setParcelaPagto(Integer parcelaPagto) {
-        this.parcelaPagto = parcelaPagto;
+    public void setValor(Double valor) {
+        this.valor = valor;
     }
 
     public Date getDataPagto() {
@@ -62,12 +56,28 @@ public class Pagamento implements Serializable {
         this.dataPagto = dataPagto;
     }
 
-    public Double getValor() {
-        return valor;
+    public Integer getParcelaPagto() {
+        return parcelaPagto;
     }
 
-    public void setValor(Double valor) {
-        this.valor = valor;
+    public void setParcelaPagto(Integer parcelaPagto) {
+        this.parcelaPagto = parcelaPagto;
+    }
+
+    public Integer getTipoRecebimento() {
+        return tipoRecebimento;
+    }
+
+    public void setTipoRecebimento(Integer tipoRecebimento) {
+        this.tipoRecebimento = tipoRecebimento;
+    }
+
+    public Integer getIdPedido() {
+        return idPedido;
+    }
+
+    public void setIdPedido(Integer idPedido) {
+        this.idPedido = idPedido;
     }
 
     @Override
