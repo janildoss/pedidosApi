@@ -1,5 +1,7 @@
 package com.api.pedidosApi.services;
 
+import com.api.pedidosApi.Repositories.PagamentoRepository;
+import com.api.pedidosApi.Repositories.PedidoRepository;
 import com.api.pedidosApi.models.Pagamento;
 import com.api.pedidosApi.models.Pedido;
 import com.api.pedidosApi.services.exceptions.ObjectNotFoundException;
@@ -24,15 +26,14 @@ public class PedidoService {
 
     public Pedido findById(Integer id) {
         Optional<Pedido> pedido = pedidoRepository.findById(id);
-        return Pedido.orElseThrow(() -> new ObjectNotFoundException(
+        return pedido.orElseThrow(() -> new ObjectNotFoundException(
                 "Pedido não encontrado! Id: " + id + ", Tipo: " + Pedido.class.getName()));
     }
 
 
     public Pedido inserirPedido(Pedido pedido){
         pedido.setId(null);
-        pedido.setEstadoPagamento(1);
-
+        pedido.setPendente();
         return pedidoRepository.save(pedido);
     }
 
@@ -49,31 +50,28 @@ public class PedidoService {
        Pedido pedido = pedidoRepository.findById(id)
                .orElseThrow(() -> new ObjectNotFoundException("Pedido com id " + id + " não encontrado, portanto não pode ser atualizado!"));
 
-       Pagamento pagamento = PagamentoRepository.findById(id)
-               .orElseThrow(() -> new ObjectNotFoundException( " não foi encontrado, ppagamento para este pedido!"));
+       Pagamento pagamento = pagamentoRepository.findById(id)
+               .orElseThrow(() -> new ObjectNotFoundException( " não foi encontrado, pagamento para este pedido!"));
 
-       Integer maxParcela = PagamentoRepository.findMaxParcela(id);
+      Integer maxParcelaPagto = Optional.ofNullable(pagamentoRepository.findMaxParcelaPagtoByPedidoId(id)).orElse(0);
 
-       // EstadoPagamento: 1-Pendente, 2-Quitado, 3-Cancelado
-       // TipoPagamento:1-A vista, 2-CartaoAvista e 3-CartaoParcelado
-       if (pedidoAtualizado.getEstadoPagamento() == 1 && pedidoAtualizado.getTipoPagamento() == 1 && pagamento.getParcelaPagto() != null) {
-           pedido.setEstadoPagamento(2);
+       if (pedidoAtualizado.isPendente() && pedidoAtualizado.isAvista()  && maxParcelaPagto != 0) {
+           pedido.setQuitado();;
        }else{
-           pedido.setEstadoPagamento(pedidoAtualizado.getEstadoPagamento());
+           pedido.setPendente();
        }
        //cartao a vista
-       if (pedidoAtualizado.getEstadoPagamento() == 1 && pedidoAtualizado.getTipoPagamento() == 2 && pagamento.getParcelaPagto() != null) {
-           pedido.setEstadoPagamento(2);
+       if (pedidoAtualizado.isPendente() && pedidoAtualizado.isCartaoAvista()  && maxParcelaPagto != 0) {
+           pedido.setQuitado();
        }else{
-           pedido.setEstadoPagamento(pedidoAtualizado.getEstadoPagamento());
+           pedido.setPendente();
        }
        //cartao parcelado
-       if (pedidoAtualizado.getEstadoPagamento() == 1 && pedidoAtualizado.getTipoPagamento() == 3 && (maxParcela <  pedidoAtualizado.getNumParcela())  ) {
-           pedido.setEstadoPagamento(2);
+       if (pedidoAtualizado.isPendente() && pedidoAtualizado.isCartaoAprazo() && (maxParcelaPagto == pedidoAtualizado.getNumParcela()))   {
+           pedido.setQuitado() ;
        }else{
            pedido.setEstadoPagamento(pedidoAtualizado.getEstadoPagamento());
        }
-
        pedido.setTipoPagamento(pedidoAtualizado.getTipoPagamento());
        pedido.setTipoPagamento(pedidoAtualizado.getTipoPagamento());
        pedido.setNumParcela(pedidoAtualizado.getNumParcela());
