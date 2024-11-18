@@ -28,9 +28,6 @@ public class Cliente implements Serializable {
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Endereco> enderecos = new ArrayList<>();
 
-
-    //private List<Endereco> enderecos;
-
     @ElementCollection
     @CollectionTable(name="TELEFONE")
     private Set<String> telefones = new HashSet<>();
@@ -83,7 +80,7 @@ public class Cliente implements Serializable {
         return TipoCliente.toEnum(tipo)   ;
     }
 
-    public void setTipo(TipoCliente tipo) {
+       public void setTipo(TipoCliente tipo) {
         this.tipo = tipo.getCod() ;
     }
 
