@@ -1,9 +1,7 @@
 package com.api.pedidosApi.models;
 
 import com.api.pedidosApi.Enums.EstadoPagamento;
-//import com.api.pedidosApi.Enums.TipoCliente;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
@@ -35,8 +33,6 @@ public class Pedido  implements Serializable {
 
     public Pedido(){
     }
-
-
     public Pedido(Integer id, Date dataPedido, EstadoPagamento estadoPagamento, Integer tipoPagamento, Integer numParcela) {
         this.id = id;
         this.dataPedido = dataPedido;

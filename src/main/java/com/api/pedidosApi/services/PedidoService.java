@@ -2,7 +2,6 @@ package com.api.pedidosApi.services;
 
 import com.api.pedidosApi.Repositories.PagamentoRepository;
 import com.api.pedidosApi.Repositories.PedidoRepository;
-import com.api.pedidosApi.models.Pagamento;
 import com.api.pedidosApi.models.Pedido;
 import com.api.pedidosApi.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
