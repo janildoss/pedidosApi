@@ -21,7 +21,6 @@ public class Pedido  implements Serializable {
     private Integer id;
     private Date dataPedido;
     private Integer  estadoPagamento;
-   // private EstadoPagamento estadoPagamento;
     private Integer  tipoPagamento;
     private Integer numParcela;
 
