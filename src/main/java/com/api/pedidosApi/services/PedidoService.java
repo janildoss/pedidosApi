@@ -45,38 +45,48 @@ public class PedidoService {
         pedidoRepository.deleteById(id);
     }
 
-     public Pedido updatePedido(Integer id, Pedido pedidoAtualizado) {
+    public Pedido atualizaPedidoIsQuitado(Integer id, Pedido pedido) {
+        Pedido ped = pedidoRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("Pedido com id " + id + " não encontrado, portanto não pode ser atualizado!"));
 
-       Pedido pedido = pedidoRepository.findById(id)
+             ped.setQuitado();
+
+             return pedidoRepository.save(ped);
+    }
+
+    public Pedido atualizaPedidoIsCancelado(Integer id, Pedido pedido) {
+        Pedido ped = pedidoRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("Pedido com id " + id + " não encontrado, portanto não pode ser atualizado!"));
+
+        ped.setCancelado();
+
+        return pedidoRepository.save(ped);
+    }
+
+     public Pedido atualizaPedidoCartaoParcelado(Integer id, Pedido pedido) {
+
+          Pedido ped = pedidoRepository.findById(id)
                .orElseThrow(() -> new ObjectNotFoundException("Pedido com id " + id + " não encontrado, portanto não pode ser atualizado!"));
 
-       Pagamento pagamento = pagamentoRepository.findById(id)
-               .orElseThrow(() -> new ObjectNotFoundException( " não foi encontrado, pagamento para este pedido!"));
+           Integer maxParcelaPagto = Optional.ofNullable(pagamentoRepository.findMaxParcelaPagtoByPedidoId(id)).orElse(0);
+           if (ped.isPendente() && ped.isCartaoAprazo() && (maxParcelaPagto.equals(ped.getNumParcela()))) {
+              ped.setQuitado() ;
+           }else{
+              ped.setPendente();
+           }
+           return pedidoRepository.save(ped);
+    }
 
-      Integer maxParcelaPagto = Optional.ofNullable(pagamentoRepository.findMaxParcelaPagtoByPedidoId(id)).orElse(0);
+    public Pedido atualizaDadosPedido(Integer id, Pedido pedido) {
 
-       if (pedidoAtualizado.isPendente() && pedidoAtualizado.isAvista()  && maxParcelaPagto != 0) {
-           pedido.setQuitado();;
-       }else{
-           pedido.setPendente();
-       }
-       //cartao a vista
-       if (pedidoAtualizado.isPendente() && pedidoAtualizado.isCartaoAvista()  && maxParcelaPagto != 0) {
-           pedido.setQuitado();
-       }else{
-           pedido.setPendente();
-       }
-       //cartao parcelado
-       if (pedidoAtualizado.isPendente() && pedidoAtualizado.isCartaoAprazo() && (maxParcelaPagto == pedidoAtualizado.getNumParcela()))   {
-           pedido.setQuitado() ;
-       }else{
-           pedido.setEstadoPagamento(pedidoAtualizado.getEstadoPagamento());
-       }
-       pedido.setTipoPagamento(pedidoAtualizado.getTipoPagamento());
-       pedido.setTipoPagamento(pedidoAtualizado.getTipoPagamento());
-       pedido.setNumParcela(pedidoAtualizado.getNumParcela());
+        Pedido ped = pedidoRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("Pedido com id " + id + " não encontrado, portanto não pode ser atualizado!"));
 
-       return pedidoRepository.save(pedido);
-   }
+        ped.setTipoPagamento(pedido.getTipoPagamento());
+        ped.setNumParcela(pedido.getNumParcela());
+        return pedidoRepository.save(ped);
+    }
+
+
 
 }

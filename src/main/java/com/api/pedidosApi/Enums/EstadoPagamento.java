@@ -25,9 +25,9 @@ public enum EstadoPagamento {
             return null;
         }
 
-        for(EstadoPagamento x : EstadoPagamento.values()){
-            if(cod.equals(x.getCod())){
-                return x;
+        for(EstadoPagamento itemEstPagamento : EstadoPagamento.values()){
+            if(cod.equals(itemEstPagamento.getCod())){
+                return itemEstPagamento;
             }
         }
         throw new IllegalArgumentException("Id invalido: " + cod);

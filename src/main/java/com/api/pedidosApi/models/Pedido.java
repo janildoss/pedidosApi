@@ -1,7 +1,7 @@
 package com.api.pedidosApi.models;
 
 import com.api.pedidosApi.Enums.EstadoPagamento;
-import com.api.pedidosApi.Enums.TipoCliente;
+//import com.api.pedidosApi.Enums.TipoCliente;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -71,8 +71,8 @@ public class Pedido  implements Serializable {
     }
 
             public EstadoPagamento getEstadoPagamento() {
-        return EstadoPagamento.toEnum(estadoPagamento);
-    }
+                  return EstadoPagamento.toEnum(estadoPagamento);
+            }
 
             public void setEstadoPagamento(EstadoPagamento estadoPagamento) {
                     this.estadoPagamento = estadoPagamento.getCod();
