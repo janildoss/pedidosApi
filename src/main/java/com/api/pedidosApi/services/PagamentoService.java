@@ -1,8 +1,6 @@
 package com.api.pedidosApi.services;
 
 import com.api.pedidosApi.Repositories.PagamentoRepository;
-import com.api.pedidosApi.models.Categoria;
-import com.api.pedidosApi.models.Cliente;
 import com.api.pedidosApi.models.Pagamento;
 import com.api.pedidosApi.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,12 +40,7 @@ public class PagamentoService {
         pagamentoRepository.deleteById(id);
     }
 
-    public Pagamento AtualizaPagamento(Integer Id){
-
-
-    }
-
-    public Pagamento updatePagamento(Integer id, Pagamento pagamentoAtualizado) {
+     public Pagamento updatePagamento(Integer id, Pagamento pagamentoAtualizado) {
         Optional<Pagamento> pagamentoExistente = pagamentoRepository.findById(id);
 
         if (pagamentoExistente.isPresent()) {
