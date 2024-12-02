@@ -24,7 +24,7 @@ public class TipoRecebimentoService {
     public TipoRecebimento findById(Integer id) {
         Optional<TipoRecebimento> tipoRecebimento = TipoRecebimentoRepository.findById(id);
         return tipoRecebimento.orElseThrow(() -> new ObjectNotFoundException(
-                "Cliente não encontrada! Id: " + id + ", Tipo: " + TipoRecebimento.class.getName()));
+                "TipoRecebimento não encontrado! Id: " + id + ", Tipo: " + TipoRecebimento.class.getName()));
     }
 
     public TipoRecebimento inserirTipoRecebimento(TipoRecebimento tipoRecebimento){
