@@ -1,8 +1,6 @@
 package com.api.pedidosApi.services;
 
 import com.api.pedidosApi.Repositories.TipoRecebimentoRepository;
-//import com.api.pedidosApi.models.Cliente;
-import com.api.pedidosApi.models.Cliente;
 import com.api.pedidosApi.models.TipoRecebimento;
 import com.api.pedidosApi.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
