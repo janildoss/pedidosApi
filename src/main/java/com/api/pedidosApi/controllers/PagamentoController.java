@@ -1,6 +1,6 @@
 package com.api.pedidosApi.controllers;
 
-import com.api.pedidosApi.models.Categoria;
+
 import com.api.pedidosApi.models.Pagamento;
 import com.api.pedidosApi.services.PagamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
