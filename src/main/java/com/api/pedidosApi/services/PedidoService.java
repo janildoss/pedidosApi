@@ -80,10 +80,10 @@ public class PedidoService {
            return pedidoRepository.save(pedidoExistente);
     }
 
-    public Pedido atualizaDadosPedido(Pedido pedidoAtualizado) {
+    public Pedido atualizaDadosPedido(Integer id, Pedido pedidoAtualizado) {
 
-        Pedido pedidoExistente = pedidoRepository.findById(pedidoAtualizado.getId())
-                .orElseThrow(() -> new ObjectNotFoundException("Pedido com id " + pedidoAtualizado.getId() + " não encontrado!"));
+        Pedido pedidoExistente = pedidoRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("Pedido com id " + id + " não encontrado!"));
 
         // Atualiza apenas os campos necessários
         if (pedidoAtualizado.getTipoPagamento() != null) {
