@@ -1,13 +1,11 @@
 package com.api.pedidosApi.controllers;
 
-import com.api.pedidosApi.models.Pagamento;
 import com.api.pedidosApi.models.Pedido;
 import com.api.pedidosApi.services.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
