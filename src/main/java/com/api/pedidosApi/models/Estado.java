@@ -1,5 +1,6 @@
 package com.api.pedidosApi.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -16,7 +17,8 @@ public class Estado implements Serializable {
     private String nome;
 
     @OneToMany(mappedBy = "estado", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-   @JsonManagedReference
+   //@JsonManagedReference
+    @JsonBackReference
     private List<Cidade> cidades = new ArrayList<>();
 
     public Estado(){

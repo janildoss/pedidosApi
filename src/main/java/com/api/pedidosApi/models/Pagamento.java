@@ -1,5 +1,7 @@
 package com.api.pedidosApi.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,6 +16,7 @@ public class Pagamento implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Double valor;
+    @JsonFormat(pattern="dd/MM/yyyy HH:mm")
     private Date dataPagto;
     private Integer parcelaPagto;
     private Integer tipoRecebimento;

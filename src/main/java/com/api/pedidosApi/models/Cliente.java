@@ -1,6 +1,7 @@
 package com.api.pedidosApi.models;
 
 import com.api.pedidosApi.Enums.TipoCliente;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -21,20 +22,30 @@ public class Cliente implements Serializable {
     private String cpfOuCnpj;
     private Integer tipo;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Pedido> pedidos  = new ArrayList<>();;
+   // @JsonManagedReference
+    //@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    //@JsonIgnore
+    //private List<Pedido> pedidos  = new ArrayList<>();;
+   //@OneToMany(mappedBy = "cliente")
 
+   //@OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
+   //@JsonIgnore
+   //private List<Pedido> pedidos = new ArrayList<>();
 
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Endereco> enderecos = new ArrayList<>();
+    //@JsonManagedReference
 
-    @ElementCollection
-    @CollectionTable(name="TELEFONE")
-    private Set<String> telefones = new HashSet<>();
+   @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+   private Set<Endereco>enderecos = new HashSet<>();
 
-   public Cliente(){
+   //private List<Endereco> enderecos = new ArrayList<>();
 
+    //@JsonIgnore
+   @ElementCollection(fetch=FetchType.EAGER)
+   @CollectionTable(name = "telefone",
+           joinColumns = @JoinColumn(name = "cliente_id"))
+   private Set<String> telefones = new HashSet<>();
+
+    public Cliente(){
     }
 
     public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo) {
@@ -44,6 +55,20 @@ public class Cliente implements Serializable {
         this.cpfOuCnpj = cpfOuCnpj;
         this.tipo = tipo.getCod() ;
     }
+
+
+   // @ElementCollection
+    public void setTipo(Integer tipo) {
+        this.tipo = tipo;
+    }
+
+   // public List<Pedido> getPedidos() {
+   //     return pedidos;
+   // }
+
+   // public void setPedidos(List<Pedido> pedidos) {
+   //     this.pedidos = pedidos;
+  //  }
 
     public Integer getId() {
         return id;
@@ -78,18 +103,17 @@ public class Cliente implements Serializable {
     }
 
     public TipoCliente getTipo() {
-        return TipoCliente.toEnum(tipo)   ;
+        return TipoCliente.toEnum(tipo) ;
     }
-
-       public void setTipo(TipoCliente tipo) {
+    public void setTipo(TipoCliente tipo) {
         this.tipo = tipo.getCod() ;
     }
 
-    public List<Endereco> getEnderecos() {
-        return enderecos;
+   public Set<Endereco> getEnderecos() {
+       return enderecos;
     }
 
-    public void setEnderecos(List<Endereco> enderecos) {
+    public void setEnderecos(Set<Endereco> enderecos) {
         this.enderecos = enderecos;
     }
 
@@ -98,19 +122,32 @@ public class Cliente implements Serializable {
     }
 
     public void setTelefones(Set<String> telefones) {
-        this.telefones = telefones;
+       this.telefones = telefones;
     }
 
-    public void setTipo(Integer tipo) {
-        this.tipo = tipo;
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Cliente)) return false;
+
+        Cliente cliente = (Cliente) o;
+        return getId().equals(cliente.getId());
     }
 
-    public List<Pedido> getPedidos() {
-        return pedidos;
+    @Override
+    public int hashCode() {
+        return getId().hashCode();
     }
+    //public void setTipo(Integer tipo) {
+     //   this.tipo = tipo;
+  // }
 
-    public void setPedidos(List<Pedido> pedidos) {
-        this.pedidos = pedidos;
-    }
+    //public List<Pedido> getPedidos() {
+     //   return pedidos;
+    //}
+
+   // public void setPedidos(List<Pedido> pedidos) {
+   //     this.pedidos = pedidos;
+ //   }
 
 }
