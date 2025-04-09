@@ -53,12 +53,14 @@ public class PedidoService {
              return pedidoRepository.save(pedidoExistente);
     }
 
+    @Transactional
     public  Pedido obterPedido(Integer id){
          Pedido pedidoExistente = pedidoRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("Pedido com id " + id + " não encontrado, portanto não pode ser atualizado!"));
 
         return pedidoExistente;
     }
+
 
     public Pedido atualizaPedidoIsCancelado(Pedido pedido) {
 

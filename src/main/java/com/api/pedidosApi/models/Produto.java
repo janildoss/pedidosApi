@@ -8,16 +8,15 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
-
-    @Entity
+@Entity
     public class Produto implements Serializable {
         private static final long serialVersionUID = 1L;
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Integer id;
-
         private String nome;
 
         @NotNull
@@ -34,12 +33,13 @@ import java.util.List;
 
         public Produto() {}
 
-        public Produto(Integer id, @NotNull String nome, @NotNull Double preco) {
+        public Produto(Integer id, String nome, Double preco, Set<ItemPedido> itensPed, List<Categoria> categorias) {
             this.id = id;
             this.nome = nome;
             this.preco = preco;
+           // this.itensPed = itensPed;
+            this.categorias = categorias;
         }
-
         public Integer getId() {
             return id;
         }
@@ -71,7 +71,6 @@ import java.util.List;
         public void setCategorias(List<Categoria> categorias) {
             this.categorias = categorias;
         }
-
 
         @Override
         public final boolean equals(Object o) {
