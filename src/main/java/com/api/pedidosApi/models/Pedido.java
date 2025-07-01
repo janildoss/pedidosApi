@@ -2,6 +2,8 @@ package com.api.pedidosApi.models;
 
 import com.api.pedidosApi.Enums.EstadoPagamento;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
@@ -26,50 +28,36 @@ public class Pedido  implements Serializable {
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
-    @ElementCollection(fetch=FetchType.EAGER)
-    @CollectionTable(name="ESTADOPAGAMENTO")
-    private Set<String>estPagamento = new HashSet<>();
+   //@JsonIgnore
+   @ElementCollection(fetch=FetchType.EAGER)
+   @CollectionTable(name="ESTADOPAGAMENTO")
+   private Set<String>estPagamento = new HashSet<>();
 
+   /*          @JsonIgnore
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<ItemPedido>itens = new HashSet<>();
+   //*********************************************************************************************
+   @JsonIgnore
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Pagamento> pagamentos = new HashSet<>();
+*/
+    // Relação com Endereco
+          //@JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "endereco_de_entrega_id")
+    private Endereco enderecoDeEntrega;
 
     public Pedido(){
     }
 
-    public Pedido(Integer id, LocalDateTime dataPedido, EstadoPagamento estadoPagamento, Integer tipoPagamento, Integer numParcela) {
+    public Pedido(Integer id, LocalDateTime dataPedido, Integer estadoPagamento, Integer tipoPagamento, Integer numParcela, Cliente cliente, Endereco enderecoDeEntrega) {
         this.id = id;
         this.dataPedido = dataPedido;
-        this.estadoPagamento = estadoPagamento.getCod() ;
+        this.estadoPagamento = estadoPagamento;
         this.tipoPagamento = tipoPagamento;
         this.numParcela = numParcela;
-    }
-
-    public void setEstadoPagamento(Integer estadoPagamento) {
-        this.estadoPagamento = estadoPagamento;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
         this.cliente = cliente;
-    }
-
-    public Set<ItemPedido> getItens() {
-         return itens ;
-    }
-
-    public void setItens(Set<ItemPedido> itens) {
-        this.itens = itens;
-    }
-
-    public Set<String> getEstPagamento() {
-        return estPagamento;
-    }
-
-    public void setEstPagamento(Set<String> estPagamento) {
-        this.estPagamento = estPagamento;
+        this.enderecoDeEntrega = enderecoDeEntrega;
     }
 
     public Integer getId() {
@@ -80,13 +68,23 @@ public class Pedido  implements Serializable {
         this.id = id;
     }
 
-    public Integer getNumParcela() {
-        return numParcela;
+    public LocalDateTime getDataPedido() {
+        return dataPedido;
     }
 
-    public void setNumParcela(Integer numParcela) {
-        this.numParcela = numParcela;
+    public void setDataPedido(LocalDateTime dataPedido) {
+        this.dataPedido = dataPedido;
     }
+
+   /* public Integer getEstadoPagamento() {
+        return estadoPagamento;
+    }
+
+    public void setEstadoPagamento(Integer estadoPagamento) {
+        this.estadoPagamento = estadoPagamento;
+    }*/
+    public EstadoPagamento getEstadoPagamento() {return EstadoPagamento.toEnum(estadoPagamento);  }
+    public void setEstadoPagamento(EstadoPagamento estadoPagamento) {this.estadoPagamento = estadoPagamento.getCod();  }
 
     public Integer getTipoPagamento() {
         return tipoPagamento;
@@ -96,49 +94,48 @@ public class Pedido  implements Serializable {
         this.tipoPagamento = tipoPagamento;
     }
 
-            public EstadoPagamento getEstadoPagamento() {
-                  return EstadoPagamento.toEnum(estadoPagamento);
-            }
+    public Integer getNumParcela() {
+        return numParcela;
+    }
 
-            public void setEstadoPagamento(EstadoPagamento estadoPagamento) {
-                    this.estadoPagamento = estadoPagamento.getCod();
-            }
+    public void setNumParcela(Integer numParcela) {
+        this.numParcela = numParcela;
+    }
 
-    public LocalDateTime getDataPedido() {
-        return dataPedido;
+    public Cliente getCliente() {
+        return cliente;
     }
-    public void setDataPedido(LocalDateTime dataPedido) {
-        this.dataPedido = dataPedido;
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
-    public boolean isPendente(){
-       return (getEstadoPagamento().getCod() == 1 );
+
+    public Endereco getEnderecoDeEntrega() {
+        return enderecoDeEntrega;
     }
+
+    public void setEnderecoDeEntrega(Endereco enderecoDeEntrega) {
+        this.enderecoDeEntrega = enderecoDeEntrega;
+    }
+    public boolean isPendente(){ return (getEstadoPagamento().getCod() == 1 );    }
     public boolean isQuitado(){
         return (getEstadoPagamento().getCod() == 2) ;
     }
     public boolean isCancelado(){
         return (getEstadoPagamento().getCod() == 3) ;
     }
-
-    public void setQuitado() {
-        this.estadoPagamento = EstadoPagamento.QUITADO.getCod();;
+    public boolean isCartaoAprazo(){
+        return (tipoPagamento == 3);
     }
-    public void setCancelado() {
-        this.estadoPagamento = EstadoPagamento.CANCELADO.getCod();;
-    }
-    public void setPendente() {
-        this.estadoPagamento = EstadoPagamento.PENDENTE.getCod();
-    }
-
     public boolean isAvista(){
         return (tipoPagamento == 1);
     }
     public boolean isCartaoAvista(){
         return (tipoPagamento == 2);
     }
-    public boolean isCartaoAprazo(){
-        return (tipoPagamento == 3);
-    }
+    public void setQuitado() { this.estadoPagamento = EstadoPagamento.QUITADO.getCod();  }
+    public void setCancelado() {     this.estadoPagamento = EstadoPagamento.CANCELADO.getCod();  }
+    public void setPendente() {   this.estadoPagamento = EstadoPagamento.PENDENTE.getCod();    }
 
     @Override
     public final boolean equals(Object o) {

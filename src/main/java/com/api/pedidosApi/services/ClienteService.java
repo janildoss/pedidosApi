@@ -1,7 +1,11 @@
 package com.api.pedidosApi.services;
 
+import com.api.pedidosApi.DTO.ClienteNewDTO;
+import com.api.pedidosApi.Enums.TipoCliente;
 import com.api.pedidosApi.Repositories.ClienteRepository;
+import com.api.pedidosApi.models.Cidade;
 import com.api.pedidosApi.models.Cliente;
+import com.api.pedidosApi.models.Endereco;
 import com.api.pedidosApi.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,11 +30,6 @@ public class ClienteService {
                 "Cliente não encontrada! Id: " + id + ", Tipo: " + Cliente.class.getName()));
     }
 
-    public Cliente inserirCliente(Cliente cliente){
-        cliente.setId(null);
-        return clienteRepository.save(cliente);
-    }
-
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
     public void deleteClienteById(Integer id) {
         if (!clienteRepository.existsById(id)) {
@@ -52,6 +51,21 @@ public class ClienteService {
         } else {
             throw new ObjectNotFoundException("Cliente com id " + id + " não encontrado portanto não pode ser atualizada!");
         }
+    }
+
+    public Cliente inserirCliente(Cliente cliente){
+        cliente.setId(null);
+        return clienteRepository.save(cliente);
+    }
+
+    public Cliente fromDTO(ClienteNewDTO dto) {
+        Cliente cli = new Cliente(null, dto.getNome(), dto.getEmail(), dto.getCpfOuCnpj(), TipoCliente.toEnum(dto.getTipo()));
+
+        cli.getTelefones().add(dto.getTelefone1());
+        if (dto.getTelefone2() != null) cli.getTelefones().add(dto.getTelefone2());
+        if (dto.getTelefone3() != null) cli.getTelefones().add(dto.getTelefone3());
+
+        return cli;
     }
 
 }

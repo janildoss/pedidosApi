@@ -1,5 +1,6 @@
 package com.api.pedidosApi.controllers;
 
+import com.api.pedidosApi.DTO.CategoriaDTO;
 import com.api.pedidosApi.models.Categoria;
 import com.api.pedidosApi.services.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value="/categorias")
@@ -15,9 +17,10 @@ public class CategoriaController {
     private CategoriaService categoriaService;
 
     @GetMapping
-    public ResponseEntity<List<Categoria>> findAll() {
-        List<Categoria> categoria = categoriaService.findAll();
-        return new ResponseEntity<>(categoria, HttpStatus.OK);
+    public ResponseEntity<List<CategoriaDTO>> findAll() {
+        List<Categoria> lstCateg = categoriaService.findAll();
+        List<CategoriaDTO>lstCategDTO = lstCateg.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList()  );
+        return new ResponseEntity<>(lstCategDTO, HttpStatus.OK);
     }
 
     @GetMapping(value="/{id}")

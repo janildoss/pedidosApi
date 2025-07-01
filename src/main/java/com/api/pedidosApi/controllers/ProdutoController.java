@@ -27,8 +27,7 @@ public class ProdutoController {
         Produto produto =  produtoService.findById(id);
         return ResponseEntity.ok().body(produto );
     }
-
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<Produto> insert(@RequestBody Produto produto ) {
         Produto  prod = produtoService.inserirProduto(produto);
         return new ResponseEntity<>(prod, HttpStatus.CREATED);

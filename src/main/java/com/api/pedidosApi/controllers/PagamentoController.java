@@ -5,6 +5,7 @@ import com.api.pedidosApi.models.Pagamento;
 import com.api.pedidosApi.services.PagamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -27,9 +28,10 @@ public class PagamentoController {
         return ResponseEntity.ok().body(pagamento );
     }
 
-    @PostMapping
+    //@PostMapping
+    @PostMapping //(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Pagamento> insertPagamento(@RequestBody Pagamento pagamento ) {
-        Pagamento novoPagamento = pagamentoService.InsertPagamento(pagamento);
+        Pagamento novoPagamento = pagamentoService.inserirPagamento(pagamento);
         return new ResponseEntity<>(novoPagamento, HttpStatus.CREATED);
     }
 

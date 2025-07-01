@@ -1,8 +1,5 @@
 package com.api.pedidosApi.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -18,16 +15,16 @@ public class Cidade implements Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "estado_id")
-    @JsonManagedReference
     private Estado estado;
 
     public Cidade(){
 
     }
 
-    public Cidade(Integer id, String nome) {
+    public Cidade(Integer id, String nome,  Estado estado) {
         this.id = id;
         this.nome = nome;
+        this.estado = estado;
     }
 
     public Integer getId() {
@@ -45,6 +42,8 @@ public class Cidade implements Serializable {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+
 
     public Estado getEstado() {
         return estado;

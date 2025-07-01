@@ -1,14 +1,12 @@
 package com.api.pedidosApi.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
     public class Produto implements Serializable {
@@ -23,7 +21,7 @@ import java.util.Set;
         @Min(value = 0, message = "O preço deve ser maior que zero")
         private Double preco;
 
-        @JsonBackReference
+        @JsonIgnore
         @ManyToMany(fetch = FetchType.EAGER)
         @JoinTable(name = "PRODUTO_CATEGORIA",
                 joinColumns = @JoinColumn(name = "produto_id"),
@@ -31,13 +29,14 @@ import java.util.Set;
         )
         private List<Categoria> categorias = new ArrayList<>();
 
-        public Produto() {}
+        public Produto() {
 
-        public Produto(Integer id, String nome, Double preco, Set<ItemPedido> itensPed, List<Categoria> categorias) {
+        }
+
+        public Produto(Integer id, String nome, Double preco,  List<Categoria> categorias) {
             this.id = id;
             this.nome = nome;
             this.preco = preco;
-           // this.itensPed = itensPed;
             this.categorias = categorias;
         }
         public Integer getId() {
