@@ -1,9 +1,9 @@
 package com.api.pedidosApi.Enums;
 
 public enum EstadoPagamento {
-    PENDENTE(1, "Pendente"),
-    QUITADO(2,"Quitado"),
-    CANCELADO(3,"Cancelado");
+    PENDENTE(1, "PENDENTE"),
+    QUITADO(2,"QUITADO"),
+    CANCELADO(3,"CANCELADO");
     private int cod;
     private String descricao;
 

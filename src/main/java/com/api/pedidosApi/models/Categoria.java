@@ -1,7 +1,4 @@
 package com.api.pedidosApi.models;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,43 +13,42 @@ public class Categoria implements Serializable {
     private Integer id;
 
     private String nome;
+           //@JsonManagedReference
+           @ManyToMany(mappedBy = "categorias", fetch = FetchType.EAGER)
+           private List<Produto> produtos = new ArrayList<>();
 
-   @JsonManagedReference
-   @ManyToMany(mappedBy = "categorias", fetch = FetchType.EAGER)
-   private List<Produto> produtos = new ArrayList<>();
+            public Categoria() {
+            }
 
-    public Categoria() {
-    }
+            public Categoria(Integer id, String nome, List<Produto> produtos) {
+                this.id = id;
+                this.nome = nome;
+                this.produtos = produtos;
+            }
 
-    public Categoria(Integer id, String nome, List<Produto> produtos) {
-        this.id = id;
-        this.nome = nome;
-        this.produtos = produtos;
-    }
+            public Integer getId() {
+                return id;
+            }
 
-    public Integer getId() {
-        return id;
-    }
+            public void setId(Integer id) {
+                this.id = id;
+            }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+            public String getNome() {
+                return nome;
+            }
 
-    public String getNome() {
-        return nome;
-    }
+            public void setNome(String nome) {
+                this.nome = nome;
+            }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+            public List<Produto> getProdutos() {
+                return produtos;
+            }
 
-    public List<Produto> getProdutos() {
-        return produtos;
-    }
-
-    public void setProdutos(List<Produto> produtos) {
-        this.produtos = produtos;
-    }
+            public void setProdutos(List<Produto> produtos) {
+                this.produtos = produtos;
+            }
 
     @Override
     public final boolean equals(Object o) {

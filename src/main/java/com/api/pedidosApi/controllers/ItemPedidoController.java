@@ -1,5 +1,6 @@
 package com.api.pedidosApi.controllers;
 
+import com.api.pedidosApi.DTO.ItemPedidoDTO;
 import com.api.pedidosApi.models.ItemPedido;
 import com.api.pedidosApi.services.ItemPedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +26,16 @@ public class ItemPedidoController {
         ItemPedido itemPedido =  itemPedidoService.findById(id);
         return ResponseEntity.ok().body(itemPedido );
     }
-
     @PostMapping
+    public ResponseEntity<ItemPedido> criar(@RequestBody ItemPedidoDTO dto) {
+        ItemPedido novoItem = itemPedidoService.inserirItemPedido(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(novoItem);
+    }
+   /* @PostMapping
     public ResponseEntity<ItemPedido> inserirItemPedido(@RequestBody ItemPedido itemPedido ) {
         ItemPedido novoItemPedido = itemPedidoService.inserirItemPedido(itemPedido);
         return new ResponseEntity<>(novoItemPedido, HttpStatus.CREATED);
-    }
+    }*/
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteItemPedido(@PathVariable Integer id) {

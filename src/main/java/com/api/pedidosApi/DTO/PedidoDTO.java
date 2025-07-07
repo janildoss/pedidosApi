@@ -1,25 +1,46 @@
 package com.api.pedidosApi.DTO;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.io.Serial;
+import com.api.pedidosApi.models.Cliente;
+import com.api.pedidosApi.models.Endereco;
+import com.api.pedidosApi.models.Pedido;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
-public class PedidoDTO  implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 1L;
+public class PedidoDTO implements Serializable {
     private Integer id;
-    @JsonFormat(pattern="dd/MM/yyyy HH:mm")
     private LocalDateTime dataPedido;
-    private Integer  estadoPagamento;
-    private Integer  tipoPagamento;
+    private String estadoPagamento;
+    private Integer tipoPagamento;
     private Integer numParcela;
 
-    public PedidoDTO(){
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
 
+
+    @ManyToOne
+   @JoinColumn(name = "endereco_de_entrega_id")
+    private Endereco enderecoDeEntrega;
+
+    @ElementCollection(fetch= FetchType.EAGER)
+    @CollectionTable(name="ESTADOPAGAMENTO")
+    private Set<String>estPagamento = new HashSet<>();
+
+    public PedidoDTO() {
     }
 
+    public PedidoDTO(Pedido pedido) {
+        this.id = pedido.getId();
+        this.dataPedido = pedido.getDataPedido();
+        this.estadoPagamento = pedido.getEstadoPagamento().getDescricao();
+        this.tipoPagamento = pedido.getTipoPagamento();
+        this.numParcela = pedido.getNumParcela();
+        this.enderecoDeEntrega = pedido.getEnderecoDeEntrega();
+        this.cliente = pedido.getCliente();
+    }
+    // Getters e Setters
     public Integer getId() {
         return id;
     }
@@ -36,16 +57,24 @@ public class PedidoDTO  implements Serializable {
         this.dataPedido = dataPedido;
     }
 
-    public Integer getEstadoPagamento() {
-        return estadoPagamento;
+    public String getEstadoPagamento() {
+        return estadoPagamento.toString();
+
     }
 
-    public void setEstadoPagamento(Integer estadoPagamento) {
+    public void setEstadoPagamento(String estadoPagamento) {
         this.estadoPagamento = estadoPagamento;
     }
 
-    public Integer getTipoPagamento() {
-        return tipoPagamento;
+    public String getTipoPagamento() {
+        if (tipoPagamento == null) return null;
+        switch (tipoPagamento) {
+            case 1: return "À VISTA";
+            case 2: return "CARTÃO À VISTA";
+            case 3: return "CARTÃO PARCELADO";
+            default: return "DESCONHECIDO";
+        }
+
     }
 
     public void setTipoPagamento(Integer tipoPagamento) {
@@ -58,5 +87,31 @@ public class PedidoDTO  implements Serializable {
 
     public void setNumParcela(Integer numParcela) {
         this.numParcela = numParcela;
+    }
+
+    public Endereco getEnderecoDeEntrega() {
+        return enderecoDeEntrega;
+    }
+
+    public void setEnderecoDeEntrega(Endereco enderecoDeEntrega) {
+        this.enderecoDeEntrega = enderecoDeEntrega;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    private String tipoPagamentoToString(Integer tipo) {
+        if (tipo == null) return null;
+        switch (tipo) {
+            case 1: return "À VISTA";
+            case 2: return "CARTÃO À VISTA";
+            case 3: return "CARTÃO PARCELADO";
+            default: return "DESCONHECIDO";
+        }
     }
 }

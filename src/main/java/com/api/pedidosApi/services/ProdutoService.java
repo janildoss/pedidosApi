@@ -39,16 +39,15 @@ public class ProdutoService {
         produtoRepository.deleteById(id);
     }
 
-    public Produto update(Integer id, Produto produto) {
-        Optional<Produto> produtoExistente = produtoRepository.findById(id);
+   public Produto update(Integer id, Produto produto) {
+       Produto existente = produtoRepository.findById(id)
+               .orElseThrow(() ->  new ObjectNotFoundException("Produto com id " + id + " não encontrada"));
 
-        if (produtoExistente.isPresent()) {
-            Produto Produto = produtoExistente.get();
-            produto.setNome(produto.getNome());
-            return produtoRepository.save(produto);
-        } else {
-            throw new ObjectNotFoundException("Produto com id " + id + " não encontrada");
-        }
-    }
+       existente.setNome(produto.getNome());
+       existente.setPreco(produto.getPreco());
+
+       return produtoRepository.save(existente);
+   }
+
 }
 
